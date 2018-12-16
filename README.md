@@ -16,3 +16,9 @@ conda install xray dask netCDF4 bottleneck
 | 2011-01-03 → 2013-08-20	| ✓ Available (expt_90.9)	| ~ Available (expt_90.9) |
 | 2009-05-07 → 2011-01-02	| ✓ Available (expt_90.8)	| ----------------------- |
 | 2008-09-19 → 2009-05-06	| ✓ Available (expt_90.6)	| ----------------------- |
+
+## Example of OpenDap request:
+
+```python
+  x = xray.open_dataset('http://tds.hycom.org/thredds/dodsC/GLBa0.08/expt_90.6/2008/uvel', decode_times=False)
+```
