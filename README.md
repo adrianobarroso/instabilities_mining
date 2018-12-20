@@ -1,16 +1,16 @@
 ## Installation
 
-### Install conda
+1. ### Install conda
 
-For packaging management
+    For packaging management
 
-```
-wget https://repo.anaconda.com/archive/Anaconda2-5.3.1-MacOSX-x86_64.pkg
-```
+    ```
+    wget https://repo.anaconda.com/archive/Anaconda2-5.3.1-MacOSX-x86_64.pkg
+    ```
 
-### Install environment
+2. ### Install environment
 
-conda install xray dask netCDF4 bottleneck
+    conda install xray dask netCDF4 bottleneck
 
 ## Hycom dataset
 
