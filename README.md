@@ -10,7 +10,7 @@
 
 2. ### Install environment
 
-    conda install xray dask netCDF4 bottleneck
+    conda install xray dask netCDF4 bottleneck pdb
 
 ## Hycom dataset
 
@@ -29,6 +29,6 @@
 
 ## Example of OpenDap request:
 
-```python
-  x = xray.open_dataset('http://tds.hycom.org/thredds/dodsC/GLBa0.08/expt_90.6/2008/uvel', decode_times=False)
+```bash
+  python hycom_dataset.py
 ```
