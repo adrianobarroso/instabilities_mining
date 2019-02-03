@@ -115,7 +115,7 @@ class Plot:
         
         plt.xlabel('time in year ' + year)
         plt.ylabel(component + ' (m/s)')
-        fig.savefig(fig_name)
+        fig.savefig('images/' + fig_name)
         
     def plot_gradient_series(self, lon, lat):
         ix = find_nearest_value_index(self.hycom_object.lon_array, lon)
@@ -133,7 +133,7 @@ class Plot:
         plt.ylabel(self.hycom_object.dataset_url.split('/')[-1] + ' gradient')
         
         fig_name = 'HYCOM_gradient_series' + '_'.join(self.hycom_object.dataset_url.split('/')[-4:]) + '_lon_' + str(lon) + '_lat_' + str(lat) + '.jpg'
-        fig.savefig(fig_name)
+        fig.savefig('images/' + fig_name)
 
 if __name__ == "__main__":
         
@@ -145,7 +145,7 @@ if __name__ == "__main__":
 
     dataset_instance = HycomDataSet(xdataset_url_2014, ydataset_url_2014)
     dataset_instance.print_datasets()
-    Plot(dataset_instance).plot_uv_series(-45, -23, 'uvel')
+    Plot(dataset_instance).plot_uv_series(-45, -23, 'vvel')
     # 
     # y_dataset_instance = HycomDataSet(ydataset_url_2014)
     # y_dataset_instance.print_dataset()
