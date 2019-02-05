@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
+import yaml
+import os
 from plot_scripts import *
 
 class HycomDataSet:
@@ -47,15 +49,16 @@ class Plot:
     def __init__(self, hycom_object):
         self.hycom_object = hycom_object
         
+    def get_yaml(self, arg):
+        yaml_file=arg
+        file = open(yaml_file).read()
+        return yaml.load(file)
+    
     def plot_area_buoy(self):
         from mpl_toolkits.basemap import Basemap
-        import yaml
         
-        buoy_station_file='dataset/buoys_stations.yml'
-        file = open(buoy_station_file).read()
-        data_stations = yaml.load(file)
-
-        [array_lon, array_lat] = array_stations(self, data_stations)
+        data_stations = get_yaml('dataset/buoys_stations.yml')
+        [array_lon, array_lat] = array_stations(data_stations)
 
         minlat = np.array(array_lat).min()
         maxlat = np.array(array_lat).max()
@@ -148,5 +151,8 @@ class Plot:
         plt.title('')
         plt.xlabel('time in year ' + year)
         plt.ylabel('gradient v')
+        dir = 'images/lon_%s_lat_%s/' % (lon, lat)
         
-        fig.savefig('images/' + fig_name)
+        os.system('mkdir %s' % (dir))
+        
+        fig.savefig('images/lon_%s_lat_%s/%s' %  (lon, lat, fig_name))

@@ -1,6 +1,6 @@
 import numpy as np
 
-def array_stations(self, data_stations):
+def array_stations(data_stations):
     array_lon = []
     array_lat = []
     
