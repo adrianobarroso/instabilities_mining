@@ -125,7 +125,11 @@ class Plot:
         plt.xlabel('time in year ' + year)
         plt.ylabel('v (m/s)')
         
-        fig.savefig('images/' + fig_name)
+        dir = 'images/lon_%s_lat_%s/' % (lon, lat)
+        
+        os.system('mkdir -p %s' % (dir))
+        
+        fig.savefig('images/lon_%s_lat_%s/%s' %  (lon, lat, fig_name))
         
     def plot_gradient_series(self, lon, lat):
         ix = find_nearest_value_index(self.hycom_object.lon_array, lon)
@@ -153,6 +157,6 @@ class Plot:
         plt.ylabel('gradient v')
         dir = 'images/lon_%s_lat_%s/' % (lon, lat)
         
-        os.system('mkdir %s' % (dir))
+        os.system('mkdir -p %s' % (dir))
         
         fig.savefig('images/lon_%s_lat_%s/%s' %  (lon, lat, fig_name))
