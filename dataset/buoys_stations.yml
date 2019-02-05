@@ -14,3 +14,8 @@ PNBOIA:
     state: RS
     lat: -31.566
     lon: -49.966
+  station4:
+    name: Quebra-direcao-costa
+    state: BR
+    lat: -24
+    lon: -42
