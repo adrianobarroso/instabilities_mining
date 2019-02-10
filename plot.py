@@ -122,7 +122,7 @@ class Plot:
 
         fig.savefig('images/lon_%s_lat_%s/%s' %  (lon, lat, fig_name))
 
-    def quiver_plot(self):
+    def quiver_plot(self, dt, range_vel):
         from mpl_toolkits.basemap import Basemap
 
         data_stations = self.get_yaml('dataset/buoys_stations.yml')
@@ -146,9 +146,10 @@ class Plot:
         # 
         x, y = m(lon, lat)
         
-        vel = self.hycom_object.vel(i1, i2, j1, j2)
+        vel = self.hycom_object.vel(i1, i2, j1, j2, dt)
+        fig_name = 'images/mapas/vel/mapa_ano_%s_index_%s_.jpg' % (str(vel.Date.values), str(vel.MT.values))
         
-        [u, v] = self.hycom_object.u_v_2d(i1, i2, j1, j2)
+        [u, v] = self.hycom_object.u_v_2d(i1, i2, j1, j2, dt)
 
         # import pdb; pdb.set_trace()
 
@@ -160,16 +161,21 @@ class Plot:
 
         m.drawparallels(np.arange(np.round(m.llcrnrlat),np.round(m.urcrnrlat),4.), labels=[1,0,0,0], color='white', dashes=[1, 4])
         m.drawmeridians(np.arange(np.round(m.llcrnrlon),np.round(m.urcrnrlon),4.), labels=[0,0,0,1], color='white', dashes=[1, 4])
-        # 
-        
-        c = m.contourf(x, y, vel.values, cmap='jet')
+
+        c = m.pcolormesh(x, y, vel.values, cmap='jet', vmin=range_vel[0], vmax=range_vel[1])
         plt.title('Snapshot hycom current for %s \n MT = %s' % (str(vel.Date.values), str(vel.MT.values)) )
-        plt.colorbar()
+
+        plt.colorbar(ticks=np.linspace(range_vel[0], range_vel[1], 13), label='velocity (m/s)')
+        plt.clim(range_vel[0], range_vel[1])
+        
+        # import pdb; pdb.set_trace()
         # m.quiver(x, y, u, v)
         dist = 6
         m.quiver(x[::dist, ::dist], y[::dist, ::dist], u[::dist, ::dist], v[::dist, ::dist], color='k')
         # m.quiver(x[::dist, ::dist], y[::dist, ::dist], u[::dist, ::dist], v[::dist, ::dist], vel[::dist, ::dist])
-        plt.savefig('mapa.jpg')
+        
+        os.system('mkdir -p %s' % ('images/mapas/vel/'))
+        
+        plt.savefig(fig_name)
         plt.close()
         # m.contourf((self.hycom_object.lon_array[i1:i2]-78-180), self.hycom_object.lat_array[j1:j2], vel.values, cmap='jet')
-        # c = plt.contourf(self.hycom_object.lon_array.isel(X=slice(i1,i2), Y=slice(j1,j2)), self.hycom_object.lat_array.isel(X=slice(i1,i2), Y=slice(j1,j2)), vel, cmap='jet')

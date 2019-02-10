@@ -13,7 +13,7 @@ class HycomDataSet:
         self.load_dataset()
 
     def set_lon_lat_array_coordinates(self):
-        # import pdb; pdb.set_trace()        
+        # import pdb; pdb.set_trace()
         lon_array = self.xdataset_persist.Longitude[0, :].values
 
         self.lon_array = lon_array - 360
@@ -47,14 +47,14 @@ class HycomDataSet:
 
         return np.sqrt((useries ** 2) + (vseries ** 2))
 
-    def vel(self, i1, i2, j1, j2):
-        uvel = self.xdataset_persist.u.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0, MT=140)
-        vvel = self.ydataset_persist.v.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0, MT=140)
+    def vel(self, i1, i2, j1, j2, dt):
+        uvel = self.xdataset_persist.u.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0, MT=dt)
+        vvel = self.ydataset_persist.v.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0, MT=dt)
 
         return np.sqrt((vvel * vvel) + (uvel * uvel))
         
-    def u_v_2d(self, i1, i2, j1, j2):
-        uvel = self.xdataset_persist.u.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0, MT=140)
-        vvel = self.ydataset_persist.v.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0, MT=140)
+    def u_v_2d(self, i1, i2, j1, j2, dt):
+        uvel = self.xdataset_persist.u.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0, MT=dt)
+        vvel = self.ydataset_persist.v.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0, MT=dt)
 
         return [uvel, vvel]
