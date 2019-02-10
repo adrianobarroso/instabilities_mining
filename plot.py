@@ -1,5 +1,4 @@
 import numpy as np
-import yaml
 import matplotlib.pyplot as plt
 import os
 from tool_scripts import *
@@ -7,11 +6,6 @@ from tool_scripts import *
 class Plot:
     def __init__(self, hycom_object):
         self.hycom_object = hycom_object
-
-    def get_yaml(self, arg):
-        yaml_file=arg
-        file = open(yaml_file).read()
-        return yaml.load(file)
 
     def plot_area_buoy(self):
         from mpl_toolkits.basemap import Basemap

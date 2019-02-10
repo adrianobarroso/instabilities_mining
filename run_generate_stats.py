@@ -34,7 +34,7 @@ if __name__ == "__main__":
         dataset_instance.print_datasets()
 
         plot_instance = Plot(dataset_instance)
-        data_stations = plot_instance.get_yaml('dataset/buoys_stations.yml')
+        data_stations = get_yaml('dataset/buoys_stations.yml')
         [array_lon, array_lat] = array_stations(data_stations)
 
         [_lon, ix] = find_nearest_value_index(dataset_instance.lon_array, -42)
