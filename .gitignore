@@ -2,3 +2,4 @@ images/*.jpg
 images/*.gif
 
 *.pyc
+*.nc

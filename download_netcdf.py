@@ -7,9 +7,10 @@ if __name__ == "__main__":
     xdataset_url_2016 = 'http://tds.hycom.org/thredds/dodsC/GLBa0.08/expt_91.2/2016/uvel'
     ydataset_url_2016 = 'http://tds.hycom.org/thredds/dodsC/GLBa0.08/expt_91.2/2016/vvel'
     
-    wget_u = 'ftp://ftp.hycom.org//datasets/GLBa0.08/expt_91.1/2016/uvel/archv.2016_007_00_3zu.nc'
+    #wget_u = 'ftp://ftp.hycom.org//datasets/GLBa0.08/expt_91.1/2016/uvel/archv.2016_007_00_3zu.nc'
+    wget_url = 'ftp://ftp.hycom.org/datasets/GLBa0.08/expt_91.2/2016/2d/archv.2016_109_00_2d.nc'
     
-    os.system('wget %s' % (wget_u))
+    os.system('wget %s' % (wget_url))
     
     run = [xdataset_url_2016, ydataset_url_2016]
     
