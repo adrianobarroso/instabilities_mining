@@ -21,10 +21,10 @@ if __name__ == "__main__":
 
     array_to_process = [
         # [xdataset_url_2013  , ydataset_url_2013],
-        # [xdataset_url_2014a , ydataset_url_2014a],
-        # [xdataset_url_2014b , ydataset_url_2014b],
-        # [xdataset_url_2015  , ydataset_url_2015]
-        [xdataset_url_2016  , ydataset_url_2016]
+        [xdataset_url_2014a , ydataset_url_2014a],
+        [xdataset_url_2014b , ydataset_url_2014b],
+        [xdataset_url_2015  , ydataset_url_2015]
+        # [xdataset_url_2016  , ydataset_url_2016]
     ]
 
     for run in array_to_process:

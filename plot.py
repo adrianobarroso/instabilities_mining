@@ -1,7 +1,10 @@
 import numpy as np
 import yaml
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
+plt.switch_backend('agg')
 import os
+
 from tool_scripts import *
 
 class Plot:
