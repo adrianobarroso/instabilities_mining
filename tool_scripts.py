@@ -1,4 +1,5 @@
 import numpy as np
+import yaml
 
 def array_stations(data_stations):
     array_lon = []
@@ -19,3 +20,8 @@ def find_nearest_value_index(array, value):
     array = np.asarray(array)
     idx = (np.abs(array - value)).argmin()
     return [array[idx], idx]
+    
+def get_yaml(arg):
+    yaml_file=arg
+    file = open(yaml_file).read()
+    return yaml.load(file)

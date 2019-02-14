@@ -37,6 +37,15 @@ class HycomDataSet:
         self.ydataset_persist = xray.open_dataset(self.ydataset_url, decode_times=False)
         self.set_lon_lat_array_coordinates()
         self.set_time_series_coordinate()
+        
+    def download(self, i1, i2, j1, j2):        
+        uvel = self.xdataset_persist.u.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0)
+        vvel = self.ydataset_persist.v.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0)
+        ds = xray.Dataset()
+        ds['u'] = uvel
+        ds['v'] = vvel
+        
+        import pdb; pdb.set_trace()
 
     def vel_series_lon_lat(self, lon, lat):
         ix = find_nearest_value_index(self.lon_array, lon)

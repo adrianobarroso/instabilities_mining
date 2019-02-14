@@ -5,3 +5,4 @@ images/mapas/vel/*.jpg
 
 *.pyc
 *.out
+*.nc

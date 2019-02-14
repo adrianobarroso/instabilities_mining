@@ -11,11 +11,6 @@ class Plot:
     def __init__(self, hycom_object):
         self.hycom_object = hycom_object
 
-    def get_yaml(self, arg):
-        yaml_file=arg
-        file = open(yaml_file).read()
-        return yaml.load(file)
-
     def plot_area_buoy(self):
         from mpl_toolkits.basemap import Basemap
 
@@ -128,13 +123,15 @@ class Plot:
     def quiver_plot(self, dt, range_vel):
         from mpl_toolkits.basemap import Basemap
 
-        data_stations = self.get_yaml('dataset/buoys_stations.yml')
+        data_stations = get_yaml('dataset/buoys_stations.yml')
         [array_lon, array_lat] = array_stations(data_stations)
 
         minlat = np.array(array_lat).min() - 3
         maxlat = np.array(array_lat).max() + 3
         minlon = np.array(array_lon).min() - 3
         maxlon = np.array(array_lon).max() + 3
+
+        import pdb; pdb.set_trace();
 
         [_l, i1] = find_nearest_value_index(self.hycom_object.lon_array, np.round(minlon))
         [_l, i2] = find_nearest_value_index(self.hycom_object.lon_array, np.round(maxlon))
@@ -145,7 +142,7 @@ class Plot:
         lon = self.hycom_object.xdataset_persist.Longitude.isel(X=slice(i1,i2), Y=slice(j1,j2)).values - 360
         lat = self.hycom_object.xdataset_persist.Latitude.isel(X=slice(i1,i2), Y=slice(j1,j2)).values
         
-        m = Basemap(projection='merc',llcrnrlat=np.min(lat),urcrnrlat=np.max(lat), llcrnrlon=np.min(lon),urcrnrlon=np.max(lon),lat_ts=-20,resolution='i')
+        m = Basemap(projection='merc',llcrnrlat=np.min(lat),urcrnrlat=np.max(lat), llcrnrlon=np.min(lon),urcrnrlon=np.max(lon),lat_ts=-20,resolution='l')
         # 
         x, y = m(lon, lat)
         
