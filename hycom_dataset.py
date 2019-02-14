@@ -38,8 +38,7 @@ class HycomDataSet:
         self.set_lon_lat_array_coordinates()
         self.set_time_series_coordinate()
         
-    def download(self, i1, i2, j1, j2):
-        
+    def download(self, i1, i2, j1, j2):        
         uvel = self.xdataset_persist.u.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0)
         vvel = self.ydataset_persist.v.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0)
         ds = xray.Dataset()
