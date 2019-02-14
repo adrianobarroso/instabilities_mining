@@ -1,5 +1,8 @@
 images/*.jpg
 images/*.gif
+images/mapas/vel/*.gif
+images/mapas/vel/*.jpg
 
 *.pyc
+*.out
 *.nc
