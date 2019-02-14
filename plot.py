@@ -131,7 +131,7 @@ class Plot:
         minlon = np.array(array_lon).min() - 3
         maxlon = np.array(array_lon).max() + 3
 
-        import pdb; pdb.set_trace();
+        # import pdb; pdb.set_trace();
 
         [_l, i1] = find_nearest_value_index(self.hycom_object.lon_array, np.round(minlon))
         [_l, i2] = find_nearest_value_index(self.hycom_object.lon_array, np.round(maxlon))
@@ -179,3 +179,60 @@ class Plot:
         plt.savefig(fig_name)
         plt.close()
         # m.contourf((self.hycom_object.lon_array[i1:i2]-78-180), self.hycom_object.lat_array[j1:j2], vel.values, cmap='jet')
+    
+    def quiver_plot_around_instability(self, dt_index, range_vel):
+        from mpl_toolkits.basemap import Basemap
+
+        data_stations = get_yaml('dataset/buoys_stations.yml')
+        [array_lon, array_lat] = array_stations(data_stations)
+
+        minlat = np.array(array_lat).min() - 3
+        maxlat = np.array(array_lat).max() + 3
+        minlon = np.array(array_lon).min() - 3
+        maxlon = np.array(array_lon).max() + 3
+
+        # import pdb; pdb.set_trace();
+
+        [_l, i1] = find_nearest_value_index(self.hycom_object.lon_array, np.round(minlon))
+        [_l, i2] = find_nearest_value_index(self.hycom_object.lon_array, np.round(maxlon))
+        [_l, j1] = find_nearest_value_index(self.hycom_object.lat_array, np.round(minlat))
+        [_l, j2] = find_nearest_value_index(self.hycom_object.lat_array, np.round(maxlat))
+        
+        lon = self.hycom_object.xdataset_persist.Longitude.isel(X=slice(i1,i2), Y=slice(j1,j2)).values - 360
+        lat = self.hycom_object.xdataset_persist.Latitude.isel(X=slice(i1,i2), Y=slice(j1,j2)).values
+        # import pdb; pdb.set_trace()
+        
+        fig_dir = '%s/%s' % ('images/mapas/instabilities', int(self.hycom_object.xdataset_persist.u.Date[dt_index].values))
+        
+        os.system('mkdir -p %s' % (fig_dir))
+        
+        # import pdb; pdb.set_trace()
+        for iindex in range(dt_index - 2, dt_index + 3):
+            fig = plt.figure()
+            vel = self.hycom_object.vel(i1, i2, j1, j2, iindex)
+            
+            fig_name = '%s/mapa_ano_%s_index_%s_.jpg' % (fig_dir, int(vel.Date.values), int(vel.MT.values))
+            print('Plotting %s' % (fig_name))
+            
+            m = Basemap(projection='merc',llcrnrlat=np.min(lat),urcrnrlat=np.max(lat), llcrnrlon=np.min(lon),urcrnrlon=np.max(lon),lat_ts=-20,resolution='l')
+            x, y = m(lon, lat)
+            m.drawmapboundary()
+            m.drawcoastlines()
+            x_stations, y_stations = m(array_lon, array_lat)
+            m.scatter(x_stations, y_stations, 30, marker='o', color='black', zorder=100)
+            m.drawparallels(np.arange(np.round(m.llcrnrlat),np.round(m.urcrnrlat),4.), labels=[1,0,0,0], color='white', dashes=[1, 4])
+            m.drawmeridians(np.arange(np.round(m.llcrnrlon),np.round(m.urcrnrlon),4.), labels=[0,0,0,1], color='white', dashes=[1, 4])
+            
+            [u, v] = self.hycom_object.u_v_2d(i1, i2, j1, j2, iindex)
+            
+            c = m.pcolormesh(x, y, vel.values, cmap='jet', vmin=range_vel[0], vmax=range_vel[1])
+            plt.title('Snapshot hycom current for %s \n MT = %s' % (int(vel.Date.values), int(vel.MT.values)) )
+
+            plt.colorbar(ticks=np.linspace(range_vel[0], range_vel[1], 13), label='velocity (m/s)')
+            plt.clim(range_vel[0], range_vel[1])
+
+            dist = 6
+            m.quiver(x[::dist, ::dist], y[::dist, ::dist], u[::dist, ::dist], v[::dist, ::dist], color='k')
+            
+            plt.savefig(fig_name)
+            plt.close("all")

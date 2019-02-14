@@ -68,16 +68,17 @@ if __name__ == "__main__":
     for index in gradient_mt_index:
         [run, exp, year] = dataset_instance.xdataset_url.split('/')[-4:-1]
         print('\n\n\n')
+        # import pdb; pdb.set_trace();
         print('Plotting map for dataset %s experiment %s year %s \n Date: %s MT: %s' % (
                 run,
                 exp,
                 year,
-                str(useries[mt_index].Date.values), 
-                str(useries[mt_index].MT.values)
+                str(useries[int(index)].Date.values), 
+                str(useries[int(index)].MT.values)
             )
         )
         
-        import pdb; pdb.set_trace();
+        # import pdb; pdb.set_trace();
 
-        plot_instance.quiver_plot(mt_index, [0, 1.2])
+        plot_instance.quiver_plot_around_instability(int(index), [0, 1.2])
         
