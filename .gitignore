@@ -8,5 +8,6 @@ images/mapas/*
 *.out
 *.nc
 *.gif
+*.mp4
 
 nohup.out

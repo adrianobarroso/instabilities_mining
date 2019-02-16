@@ -85,7 +85,13 @@ if __name__ == "__main__":
             date_quiver = dataset_instance.xdataset_persist.u.Date[int(index)].values
             fig_dir = '%s/%s' % ('images/mapas/instabilities', int(dataset_instance.xdataset_persist.u.Date[int(index)].values))
             
-            os.system('convert -delay 60 -loop 0 %s/mapa_ano_%s* mapa_%s_%s.gif' % (fig_dir, year, year, int(date_quiver)) )
+            cmd = "ffmpeg -r 1 -pattern_type glob -i '%s/*.jpg' -c:v libx264 mapa_%s.mp4" % (fig_dir, int(date_quiver))
+            # "ffmpeg -y -framerate {} -i \'{}\'/%04d.png -vf scale={}:{} -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p {}.mp4"
+            # ffmpeg -framerate 1 -i *.jpg -vf scale=500:500 -c:v libx264 -profile:v high -crf 10 -pix_fmt yuv420p output.mp4
+            # ffmpeg -framerate 25 -i *.jpg -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p output.mp4
+            os.system(cmd)
+            
+            # os.system('convert -delay 60 -loop 0 %s/mapa_ano_%s* mapa_%s_%s.gif' % (fig_dir, year, year, int(date_quiver)) )
             # import pdb; pdb.set_trace()
             
             # gif_name = '%s/mapa_ano_%s_index_%s_.jpg' % (fig_dir, int(date_quiver), int(dataset_instance.xdataset_persist.u.MT[int(index)].values))
