@@ -67,3 +67,17 @@ class HycomDataSet:
         vvel = self.ydataset_persist.v.isel(X=slice(i1,i2), Y=slice(j1,j2), Depth=0, MT=dt)
 
         return [uvel, vvel]
+    
+    def high_gradient_uv_series_index(self, ix, iy, gradient_limit):
+        useries = self.xdataset_persist.u.isel(X=ix, Y=iy, Depth=0)
+        vseries = self.ydataset_persist.v.isel(X=ix, Y=iy, Depth=0)
+
+        index_high_useries_gradient_mt = np.where(np.gradient(useries) > gradient_limit)
+        index_high_vseries_gradient_mt = np.where(np.gradient(vseries) > gradient_limit)
+
+        if (index_high_vseries_gradient_mt[0].size > index_high_useries_gradient_mt[0].size):
+            used_index = index_high_vseries_gradient_mt[0]
+        else:
+            used_index = index_high_useries_gradient_mt[0]
+        
+        return used_index
