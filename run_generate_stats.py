@@ -68,7 +68,7 @@ if __name__ == "__main__":
                     exp,
                     year,
                     str(dataset_instance.xdataset_persist.Date[int(index)].values), 
-                    str(dataset_instance.xdataset_persist.MT[int(index)].values)
+                    str(dataset_instance.xdataset_persist.Date[int(index)].MT.values)
                 )
             )
             
