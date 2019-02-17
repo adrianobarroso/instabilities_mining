@@ -44,7 +44,7 @@ if __name__ == "__main__":
         [array_lon, array_lat] = array_stations(data_stations)
         
         gradient_index = []
-        
+        gradient_indexes_with_lon_lat = []
         for project in data_stations:
             for station in data_stations[project]:
                 lon = data_stations[project][station]['lon']
@@ -57,10 +57,14 @@ if __name__ == "__main__":
                 used_index = dataset_instance.high_gradient_uv_series_index(ix, iy, gradient_limit)
                 
                 gradient_index = np.append(gradient_index, used_index)                
-        
+                # import pdb; pdb.set_trace();
+                gradient_index_with_lon_lat = [gradient_index, _lon, _lat]
+                
+                gradient_indexes_with_lon_lat.append(gradient_index_with_lon_lat)
+                
         all_gradient_mt_index = np.unique(gradient_index)
 
-        # import pdb; pdb.set_trace();
+        import pdb; pdb.set_trace();
         for index in [all_gradient_mt_index[-1]]:
             [run, exp, year] = dataset_instance.xdataset_url.split('/')[-4:-1]
             # import pdb; pdb.set_trace();

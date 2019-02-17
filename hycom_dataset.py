@@ -46,7 +46,7 @@ class HycomDataSet:
         ds['u'] = uvel
         ds['v'] = vvel
         
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
 
     def vel_series_lon_lat(self, lon, lat):
         ix = find_nearest_value_index(self.lon_array, lon)
@@ -70,6 +70,7 @@ class HycomDataSet:
         return [uvel, vvel]
     
     def high_gradient_uv_series_index(self, ix, iy, gradient_limit):
+        # import pdb; pdb.set_trace()
         useries = self.xdataset_persist.u.isel(X=ix, Y=iy, Depth=0)
         vseries = self.ydataset_persist.v.isel(X=ix, Y=iy, Depth=0)
 
