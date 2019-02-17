@@ -2,6 +2,9 @@ import yaml
 from hycom_dataset import *
 
 if __name__ == "__main__":
+    # http://ncss.hycom.org/thredds/ncss/GLBa0.08/expt_91.2/2017/uvel?var=u&north=-10&west=220&east=250&south=-33&disableProjSubset=on&horizStride=1&time_start=2017-01-01T00%3A00%3A00Z&time_end=2017-12-31T00%3A00%3A00Z&timeStride=1&vertCoord=0&addLatLon=true&accept=netcdf
+    
+    # 'http://ncss.hycom.org/thredds/ncss/GLBa0.08/expt_91.2/2017/uvel?var=u&north=-10&west=-60&east=-30&south=-33&horizStride=1&time_start=2017-01-01T00%3A00%3A00Z&time_end=2017-12-31T00%3A00%3A00Z&timeStride=1&vertCoord=0&addLatLon=true&accept=netcdf'
     # xdataset_url_2008 = 'http://tds.hycom.org/thredds/dodsC/GLBa0.08/expt_90.6/2008/uvel'
     # ydataset_url_2008 = 'http://tds.hycom.org/thredds/dodsC/GLBa0.08/expt_90.6/2008/vvel'
     xdataset_url_2013a = 'http://tds.hycom.org/thredds/dodsC/GLBa0.08/expt_90.9/2013/uvel'

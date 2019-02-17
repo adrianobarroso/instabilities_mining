@@ -9,5 +9,6 @@ images/mapas/*
 *.nc
 *.gif
 *.mp4
+*.dods
 
 nohup.out
