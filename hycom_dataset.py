@@ -33,6 +33,7 @@ class HycomDataSet:
         print(self.ydataset_persist)
 
     def load_dataset(self):
+        # import pdb; pdb.set_trace()
         self.xdataset_persist = xray.open_dataset(self.xdataset_url, decode_times=False)
         self.ydataset_persist = xray.open_dataset(self.ydataset_url, decode_times=False)
         self.set_lon_lat_array_coordinates()

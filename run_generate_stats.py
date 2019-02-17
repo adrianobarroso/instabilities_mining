@@ -30,6 +30,8 @@ if __name__ == "__main__":
         # [xdataset_url_2015  , ydataset_url_2015],
         # [xdataset_url_2016  , ydataset_url_2016]
     ]
+    
+     # xray.open_dataset('https://data.nodc.noaa.gov/thredds/dodsC/ncep/rtofs/2015/201501/ofs.20150131/surface/ofs_atl.t00z.f010.20150131.grb.grib2')
 
     for run in array_to_process:        
         print('Running prints of run %s' % run[0])
@@ -51,7 +53,7 @@ if __name__ == "__main__":
                 [_lon, ix] = find_nearest_value_index(dataset_instance.lon_array, lon)
                 [_lat, iy] = find_nearest_value_index(dataset_instance.lat_array, lat)
         
-                gradient_limit = 0.4
+                gradient_limit = 0.35
                 used_index = dataset_instance.high_gradient_uv_series_index(ix, iy, gradient_limit)
                 
                 gradient_index = np.append(gradient_index, used_index)                
@@ -59,7 +61,7 @@ if __name__ == "__main__":
         all_gradient_mt_index = np.unique(gradient_index)
 
         # import pdb; pdb.set_trace();
-        for index in all_gradient_mt_index:
+        for index in [all_gradient_mt_index[-1]]:
             [run, exp, year] = dataset_instance.xdataset_url.split('/')[-4:-1]
             # import pdb; pdb.set_trace();
             print('\n\n')
