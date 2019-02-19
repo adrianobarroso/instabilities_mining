@@ -1,34 +1,28 @@
 import os
 from tool_scripts import *
+import yaml
 from hycom_dataset import *
+from datasets import *
 
 if __name__ == "__main__":
-    
-    xdataset_url_2016 = 'http://tds.hycom.org/thredds/dodsC/GLBa0.08/expt_91.2/2016/uvel'
-    ydataset_url_2016 = 'http://tds.hycom.org/thredds/dodsC/GLBa0.08/expt_91.2/2016/vvel'
-    
-    #wget_u = 'ftp://ftp.hycom.org//datasets/GLBa0.08/expt_91.1/2016/uvel/archv.2016_007_00_3zu.nc'
-    wget_url = 'ftp://ftp.hycom.org/datasets/GLBa0.08/expt_91.2/2016/2d/archv.2016_109_00_2d.nc'
-    
-    os.system('wget %s' % (wget_url))
-    
-    run = [xdataset_url_2016, ydataset_url_2016]
-    
-    data_stations = get_yaml('dataset/buoys_stations.yml')
-    [array_lon, array_lat] = array_stations(data_stations)
-    
-    dataset_instance = HycomDataSet(run[0], run[1])
-    dataset_instance.print_datasets()
+    os.system('mkdir -p netcdf_files')
 
-    minlat = np.array(array_lat).min() - 3
-    maxlat = np.array(array_lat).max() + 3
-    minlon = np.array(array_lon).min() - 3
-    maxlon = np.array(array_lon).max() + 3
-
-    [_l, i1] = find_nearest_value_index(dataset_instance.lon_array, np.round(minlon))
-    [_l, i2] = find_nearest_value_index(dataset_instance.lon_array, np.round(maxlon))
+    dataset_to_process = {
+        'dataset_url_2013a': DATASET_URL_2013a,
+        'dataset_url_2013b': DATASET_URL_2013b,
+        'dataset_url_2014a': DATASET_URL_2014a,
+        'dataset_url_2014b': DATASET_URL_2014b,
+        'dataset_url_2015': DATASET_URL_2015,
+        'dataset_url_2016': DATASET_URL_2016
+    }
     
-    [_l, j1] = find_nearest_value_index(dataset_instance.lat_array, np.round(minlat))
-    [_l, j2] = find_nearest_value_index(dataset_instance.lat_array, np.round(maxlat))
-
-    dataset_instance.download(i1, i2, j1, j2)
+    for dataset in dataset_to_process:
+        splitted_url = dataset_to_process[dataset].split("__var__")
+        dimensions = ['u', 'v']
+        
+        for dimension in dimensions:
+            url = splitted_url[0] + dimension + splitted_url[1] + dimension + splitted_url[2]
+            print '\n\n'
+            print url            
+            # import pdb; pdb.set_trace()
+            os.system('wget -O netcdf_files/%svel_%s.nc \'%s\'' % (dimension, dataset.split('_')[-1], url))
