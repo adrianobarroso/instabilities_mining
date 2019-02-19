@@ -30,5 +30,5 @@ if __name__ == "__main__":
             
             file_size = os.path.getsize(netcdf_output)
             
-            if file_size < 10777616
+            if file_size < 10777616:
                 os.system('wget -O % \'%s\'' % (netcdf_output, url))
