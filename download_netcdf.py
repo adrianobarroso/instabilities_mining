@@ -25,4 +25,7 @@ if __name__ == "__main__":
             print '\n\n'
             print url            
             # import pdb; pdb.set_trace()
-            os.system('wget -O netcdf_files/%svel_%s.nc \'%s\'' % (dimension, dataset.split('_')[-1], url))
+            netcdf_output = 'netcdf_files/%svel_%s.nc' % (dimension, dataset.split('_')[-1])
+            
+            print os.path.getsize(netcdf_output)
+            # os.system('wget -O % \'%s\'' % (netcdf_output, url))
