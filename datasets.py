@@ -12,7 +12,7 @@ DATASET_URL_2013a = '%s/%s/%s/%svel?var=%s&north=-18&west=-55&east=-38&south=-36
 DATASET_URL_2013b = '%s/%s/%s/%svel?var=%s&north=-18&west=-55&east=-38&south=-36&disableProjSubset=on&horizStride=1&time_start=%s&time_end=%s&timeStride=1&vertCoord=0&addLatLon=true&accept=netcdf' % (
     'http://ncss.hycom.org/thredds/ncss/GLBa0.08',
     'expt_91.0',
-    '2013',
+    '2013b',
     '__var__',
     '__var__',
     '2013-08-21T00:00:00Z',

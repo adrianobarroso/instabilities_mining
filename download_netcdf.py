@@ -9,11 +9,11 @@ if __name__ == "__main__":
 
     dataset_to_process = {
         'dataset_url_2013a': DATASET_URL_2013a,
-        'dataset_url_2013b': DATASET_URL_2013b,
-        'dataset_url_2014a': DATASET_URL_2014a,
-        'dataset_url_2014b': DATASET_URL_2014b,
-        'dataset_url_2015': DATASET_URL_2015,
-        'dataset_url_2016': DATASET_URL_2016
+        # 'dataset_url_2013b': DATASET_URL_2013b,
+        # 'dataset_url_2014a': DATASET_URL_2014a,
+        # 'dataset_url_2014b': DATASET_URL_2014b,
+        # 'dataset_url_2015': DATASET_URL_2015,
+        # 'dataset_url_2016': DATASET_URL_2016
     }
     
     for dataset in dataset_to_process:

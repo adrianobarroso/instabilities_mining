@@ -202,7 +202,8 @@ class Plot:
         lat = self.hycom_object.xdataset_persist.Latitude.isel(X=slice(i1,i2), Y=slice(j1,j2)).values
         # import pdb; pdb.set_trace()
         
-        fig_dir = '%s/%s' % ('images/mapas/instabilities', int(self.hycom_object.xdataset_persist.u.Date[dt_index].values))
+        # fig_dir = '%s/%s' % ('images/mapas/instabilities', int(self.hycom_object.xdataset_persist.u.Date[dt_index].values))
+        fig_dir = '%s/%s' % ('images/mapas/instabilities', self.hycom_object.time_range[dt_index].strftime("%Y%m%d"))
         
         os.system('mkdir -p %s' % (fig_dir))
         
@@ -211,7 +212,8 @@ class Plot:
             fig = plt.figure()
             vel = self.hycom_object.vel(i1, i2, j1, j2, iindex)
             
-            fig_name = '%s/mapa_ano_%s_index_%s_.jpg' % (fig_dir, int(vel.Date.values), int(vel.MT.values))
+            fig_name = '%s/mapa_ano_%s_index_%s_.jpg' % (fig_dir, self.hycom_object.time_range[iindex].strftime("%Y%m%d"), int(vel.MT.values))
+            # fig_name = '%s/mapa_ano_%s_index_%s_.jpg' % (fig_dir, int(vel.MT.values), int(vel.MT.values))
             print('Plotting %s' % (fig_name))
             
             m = Basemap(projection='merc',llcrnrlat=np.min(lat),urcrnrlat=np.max(lat), llcrnrlon=np.min(lon),urcrnrlon=np.max(lon),lat_ts=-20,resolution='l')
@@ -226,7 +228,7 @@ class Plot:
             [u, v] = self.hycom_object.u_v_2d(i1, i2, j1, j2, iindex)
             
             c = m.pcolormesh(x, y, vel.values, cmap='jet', vmin=range_vel[0], vmax=range_vel[1])
-            plt.title('Snapshot hycom current for %s \n MT = %s' % (int(vel.Date.values), int(vel.MT.values)) )
+            plt.title('Snapshot hycom current for %s \n MT = %s' % (self.hycom_object.time_range[iindex].strftime("%Y%m%d"), int(vel.MT.values)) )
 
             plt.colorbar(ticks=np.linspace(range_vel[0], range_vel[1], 13), label='velocity (m/s)')
             plt.clim(range_vel[0], range_vel[1])
