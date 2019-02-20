@@ -35,7 +35,7 @@ if __name__ == "__main__":
             
             gradient_index = []
             gradient_indexes_with_lon_lat = []
-            dicts = {}
+            lon_lat_index_dicts = {}
             for project in data_stations:
                 for station in data_stations[project]:
                     lon = data_stations[project][station]['lon']
@@ -46,7 +46,7 @@ if __name__ == "__main__":
                     
                     # import pdb; pdb.set_trace();
                     
-                    gradient_limit = 0.3
+                    gradient_limit = 0.25
                     used_index = dataset_instance.high_gradient_uv_series_index(ix, iy, gradient_limit)
                     
                     gradient_index = np.append(gradient_index, used_index)                
@@ -56,11 +56,16 @@ if __name__ == "__main__":
                     gradient_indexes_with_lon_lat.append(gradient_index_with_lon_lat)
                     # 
                     all_gradient_mt_index = np.unique(gradient_index)
-                    dicts[str(_lon) + '_' + str(_lat)] = all_gradient_mt_index
+                    # dicts[str(_lon) + '_' + str(_lat)] = all_gradient_mt_index
+                    for ii in all_gradient_mt_index:
+                        if str(int(ii)) in lon_lat_index_dicts:
+                            lon_lat_index_dicts[str(int(ii))] += [[_lon, _lat]]
+                        else:
+                            lon_lat_index_dicts[str(int(ii))] = [[_lon, _lat]]
+                        
         # 
         # import pdb; pdb.set_trace();
-        for index in [all_gradient_mt_index[-1]]:
-            
+        for index in all_gradient_mt_index:
             dataset_instance.set_time_series_coordinate()
             # import pdb; pdb.set_trace();
             # [run, exp, year] = dataset_instance.xdataset_url.split('/')[-4:-1]
@@ -74,7 +79,7 @@ if __name__ == "__main__":
                 )
             )
         # 
-            plot_instance.quiver_plot_around_instability(int(index), [0, 1.2])
+            plot_instance.quiver_plot_around_instability(int(index), lon_lat_index_dicts, [0, 1.2])
         #     # import pdb; pdb.set_trace();
         # 
         #     date_quiver = dataset_instance.xdataset_persist.u.Date[int(index)].values

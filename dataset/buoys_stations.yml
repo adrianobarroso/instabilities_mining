@@ -1,21 +1,21 @@
 PNBOIA:
-  station1:
-    name: Santos
-    state: SP
-    lat: -25.283
-    lon: -44.933
-  station2:
-    name: Florianópolis
-    state: SC
-    lat: -28.500
-    lon: -47.366
-  station3:
-    name: Rio Grande
-    state: RS
-    lat: -31.566
-    lon: -49.966
   station4:
     name: Quebra-direcao-costa
     state: BR
     lat: -24
     lon: -42
+  station1:
+    name: Santos
+    state: SP
+    lat: -25.283
+    lon: -44.933
+  # station2:
+  #   name: Florianópolis
+  #   state: SC
+  #   lat: -28.500
+  #   lon: -47.366
+  # station3:
+  #   name: Rio Grande
+  #   state: RS
+  #   lat: -31.566
+  #   lon: -49.966

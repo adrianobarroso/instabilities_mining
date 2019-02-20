@@ -180,7 +180,8 @@ class Plot:
         plt.close()
         # m.contourf((self.hycom_object.lon_array[i1:i2]-78-180), self.hycom_object.lat_array[j1:j2], vel.values, cmap='jet')
     
-    def quiver_plot_around_instability(self, dt_index, range_vel):
+    def quiver_plot_around_instability(self, dt_index, lon_lat_index_dicts, range_vel):
+        # import pdb; pdb.set_trace()
         from mpl_toolkits.basemap import Basemap
 
         data_stations = get_yaml('dataset/buoys_stations.yml')
@@ -221,7 +222,10 @@ class Plot:
             m.drawmapboundary()
             m.drawcoastlines()
             x_stations, y_stations = m(array_lon, array_lat)
-            m.scatter(x_stations, y_stations, 30, marker='o', color='black', zorder=100)
+            
+            x_stations_red, y_stations_red = m(np.array(lon_lat_index_dicts[str(dt_index)])[:, 0], np.array(lon_lat_index_dicts[str(dt_index)])[:, 1])
+            m.scatter(x_stations, y_stations, 30, marker='o', color='black', zorder=2)
+            m.scatter(x_stations_red, y_stations_red, 30, marker='o', color='red', zorder=4)
             m.drawparallels(np.arange(np.round(m.llcrnrlat),np.round(m.urcrnrlat),4.), labels=[1,0,0,0], color='white', dashes=[1, 4])
             m.drawmeridians(np.arange(np.round(m.llcrnrlon),np.round(m.urcrnrlon),4.), labels=[0,0,0,1], color='white', dashes=[1, 4])
             
