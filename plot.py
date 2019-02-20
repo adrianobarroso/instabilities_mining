@@ -204,7 +204,7 @@ class Plot:
         # import pdb; pdb.set_trace()
         
         # fig_dir = '%s/%s' % ('images/mapas/instabilities', int(self.hycom_object.xdataset_persist.u.Date[dt_index].values))
-        fig_dir = '%s/%s' % ('images/mapas/instabilities', self.hycom_object.time_range[dt_index].strftime("%Y%m%d"))
+        fig_dir = '%s/%s_stats' % ('images/mapas/instabilities', self.hycom_object.time_range[dt_index].strftime("%Y%m%d"))
         
         os.system('mkdir -p %s' % (fig_dir))
         

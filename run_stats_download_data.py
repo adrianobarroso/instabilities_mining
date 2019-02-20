@@ -46,7 +46,7 @@ if __name__ == "__main__":
                     
                     # import pdb; pdb.set_trace();
                     
-                    gradient_limit = 0.25
+                    gradient_limit = 0.3
                     used_index = dataset_instance.high_gradient_uv_series_index(ix, iy, gradient_limit)
                     
                     gradient_index = np.append(gradient_index, used_index)                
