@@ -21,6 +21,10 @@ if __name__ == "__main__":
         splitted_url = dataset_to_process[dataset].split("__var__")
         dimensions = ['u', 'v']
         
+        print '\n\n'
+        print 'Processing dataset %s' % (dataset.split('_')[-1])
+        print '\n\n'
+        
         for dimension in dimensions:
             # import pdb; pdb.set_trace()
             netcdf_file = 'netcdf_files/%svel_%s.nc' % (dimension, dataset.split('_')[-1])
@@ -30,7 +34,20 @@ if __name__ == "__main__":
             os.system('ncks -O -C -x -v Depth %s %s' % (netcdf_output, netcdf_output))
     
             # import pdb; pdb.set_trace()
-            os.system('ncrename -O -v Latitude,latitude %s %s' % (netcdf_output, netcdf_output))
-            os.system('ncrename -O -v Longitude,longitude %s %s' % (netcdf_output, netcdf_output))
-            os.system('ncrename -O -v %s,%scur %s %s' % (dimension, dimension, netcdf_output, netcdf_output))
-    
+            os.system('ncrename -O -v Latitude,latitude %s' % (netcdf_output))
+            os.system('ncrename -O -v Longitude,longitude %s' % (netcdf_output))
+            os.system('ncrename -O -v %s,%scur %s' % (dimension, dimension, netcdf_output))
+            
+            os.system('ncrename -d X,longitude %s' % (netcdf_output))
+            os.system('ncrename -d Y,latitude %s' % (netcdf_output))
+            
+            os.system('ncrename -O -d MT,time %s' % (netcdf_output))
+            os.system('ncrename -O -v MT,time %s' % (netcdf_output))
+            
+        
+        u_netcdf_output = '%s/%svel_%s_nodepth.nc' % (subsetdir, 'u', dataset.split('_')[-1])
+        v_netcdf_output = '%s/%svel_%s_nodepth.nc' % (subsetdir, 'v', dataset.split('_')[-1])
+        vel_netcdf_output = '%s/vel_%s_process.nc' % (subsetdir, dataset.split('_')[-1])
+        
+        os.system('cp %s %s' % (v_netcdf_output, vel_netcdf_output))
+        os.system('ncks -A %s %s' % (u_netcdf_output, vel_netcdf_output))
