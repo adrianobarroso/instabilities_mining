@@ -10,5 +10,6 @@ images/mapas/*
 *.gif
 *.mp4
 *.dods
+*.png
 
 nohup.out
