@@ -25,3 +25,31 @@ def get_yaml(arg):
     yaml_file=arg
     file = open(yaml_file).read()
     return yaml.load(file)
+
+def getuv(speed, wdir):
+    wdir = _check_radians(wdir, max_radians=4 * np.pi)
+    u = speed * np.sin(wdir)
+    v = speed * np.cos(wdir)
+    return u, v
+    
+def _check_radians(value, max_radians=2 * np.pi):
+    """Input validation of values that could be in degrees instead of radians.
+    Parameters
+    ----------
+    value : `pint.Quantity`
+        The input value to check.
+    max_radians : float
+        Maximum absolute value of radians before warning.
+    Returns
+    -------
+    `pint.Quantity`
+        The input value
+    """
+    try:
+        value = value.to('radians').m
+    except AttributeError:
+        pass
+    if np.greater(np.nanmax(np.abs(value)), max_radians):
+        warnings.warn('Input over {} radians. '
+                      'Ensure proper units are given.'.format(max_radians))
+    return value

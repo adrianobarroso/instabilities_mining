@@ -9,11 +9,11 @@ PNBOIA:
     state: SP
     lat: -25.283
     lon: -44.933
-  # station2:
-  #   name: Florianópolis
-  #   state: SC
-  #   lat: -28.500
-  #   lon: -47.366
+  station2:
+    name: Florianópolis
+    state: SC
+    lat: -28.500
+    lon: -47.366
   # station3:
   #   name: Rio Grande
   #   state: RS
