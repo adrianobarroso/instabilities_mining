@@ -13,12 +13,12 @@ if __name__ == "__main__":
     ]
     
     # ww3_cur_path = 'results/netcdf_files/ww3_globcurtot.2015.nc'
-    ww3_cur_path = 'results/netcdf_files/ww3_hycom.2016.nc'
+    ww3_cur_path = 'results/netcdf_files/ww3_hycom.2014.nc'
     # ww3_cur_path = 'results/netcdf_files/ww3_mercator.2014.nc'
     # ww3_cur = xray.open_dataset('results/netcdf_files/ww3_hycom.2014_ef.nc')
     # ww3_cur = xray.open_dataset('results/netcdf_files/ww3_mercator.2014.nc')
     
-    ww3_no_cur_path = 'results/netcdf_files/ww3_nocur.2016.nc'
+    ww3_no_cur_path = 'results/netcdf_files/ww3_nocur.2014.nc'
     # ww3_no_cur = xray.open_dataset('results/netcdf_files/ww3_nocur.2014_ef.nc')
     
     # pnboia_path = xray.open_dataset('http://goosbrasil.org:8080/pnboia/Bcabo_frio2.nc')

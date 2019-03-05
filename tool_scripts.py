@@ -26,11 +26,12 @@ def get_yaml(arg):
     file = open(yaml_file).read()
     return yaml.load(file)
 
-def getuv(speed, wdir):
-    wdir = _check_radians(wdir, max_radians=4 * np.pi)
-    u = speed * np.sin(wdir)
-    v = speed * np.cos(wdir)
-    return u, v
+def getuv(wdir):
+    wdir_radian = _check_radians(np.radians(wdir), max_radians=4 * np.pi)
+    # import pdb; pdb.set_trace()
+    u_wave_dir = -np.sin(wdir_radian)
+    v_wave_dir = -np.cos(wdir_radian)
+    return u_wave_dir, v_wave_dir
     
 def _check_radians(value, max_radians=2 * np.pi):
     """Input validation of values that could be in degrees instead of radians.

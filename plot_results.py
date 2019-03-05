@@ -197,7 +197,6 @@ class PlotResults:
         lat_stations.append(pnboia_santos.latitude[-1].values)
         lat_stations.append(pnboia_flo.latitude[-1].values)
         
-        # [u, v] = getuv(self.ww3_cur.hs[100], self.ww3_cur.dir[100])
         # import pdb; pdb.set_trace();
 
         data_stations = get_yaml('dataset/buoys_stations.yml')
@@ -252,7 +251,8 @@ class PlotResults:
             hs_cur = self.ww3_cur.hs.sel(time=time, longitude=slice(minlon, maxlon), latitude=slice(minlat, maxlat))
             c1 = m1.pcolormesh(x, y, self.ww3_cur.hs.sel(time=time, longitude=slice(minlon, maxlon), latitude=slice(minlat, maxlat)), cmap='jet', vmin=min_hs, vmax=max_hs)
             dist = 6
-            m1.quiver(x[::dist, ::dist], y[::dist, ::dist], -np.sin(hs_cur)[::dist, ::dist], -np.cos(hs_cur)[::dist, ::dist], width=0.005, scale=20)
+            u_wave_dir, v_wave_dir = getuv(self.ww3_cur.dir.sel(time=time, longitude=slice(minlon, maxlon), latitude=slice(minlat, maxlat)))
+            m1.quiver(x[::dist, ::dist], y[::dist, ::dist], u_wave_dir[::dist, ::dist], v_wave_dir[::dist, ::dist], width=0.005, scale=20)
             # fig.colorbar(c1, ax=ax2, label='Hs (m)')
         
             m2 = Basemap(projection='merc',llcrnrlat=minlat,urcrnrlat=maxlat, llcrnrlon=minlon,urcrnrlon=maxlon,lat_ts=-20,resolution='l', ax=ax2)
@@ -270,7 +270,8 @@ class PlotResults:
             c2 = m2.pcolormesh(x, y, hs_no_cur, cmap='jet', vmin=min_hs, vmax=max_hs)
             
             dist = 6
-            m2.quiver(x[::dist, ::dist], y[::dist, ::dist], -np.sin(hs_no_cur)[::dist, ::dist], -np.cos(hs_no_cur)[::dist, ::dist], width=0.005, scale=20)
+            no_cur_u_wave_dir, no_cur_v_wave_dir = getuv(self.ww3_no_cur.dir.sel(time=time, longitude=slice(minlon, maxlon), latitude=slice(minlat, maxlat)))
+            m2.quiver(x[::dist, ::dist], y[::dist, ::dist], no_cur_u_wave_dir[::dist, ::dist], no_cur_v_wave_dir[::dist, ::dist], width=0.005, scale=20)
             fig.colorbar(c2, ax=[ax1, ax2], label='Hs (m)')
         
             m3 = Basemap(projection='merc',llcrnrlat=minlat,urcrnrlat=maxlat, llcrnrlon=minlon,urcrnrlon=maxlon,lat_ts=-20,resolution='l', ax=ax3)
