@@ -74,12 +74,13 @@ if __name__ == "__main__":
             print('\n\n')
             print('Plotting map for dataset year %s \n Date: %s MT: %s' % (
                     year,
-                    str(dataset_instance.time_range[int(index)].strftime("%Y/%m/%d")), 
+                    str(dataset_instance.Date[int(index)].strftime("%Y/%m/%d")), 
                     str(dataset_instance.xdataset_persist.MT[int(index)].values)
                 )
             )
-        # 
-            plot_instance.quiver_plot_around_instability(int(index), lon_lat_index_dicts, [0, 1.2])
+        #   
+            plot_instance.quiver_plot(int(index), [0, 1.2])
+            # plot_instance.quiver_plot_around_instability(int(index), lon_lat_index_dicts, [0, 1.2])
         #     # import pdb; pdb.set_trace();
         # 
         #     date_quiver = dataset_instance.xdataset_persist.u.Date[int(index)].values

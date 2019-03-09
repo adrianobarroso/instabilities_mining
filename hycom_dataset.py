@@ -26,7 +26,7 @@ class HycomDataSet:
         start_date = date + datetime.timedelta(days=mt.values[0])
         end_date = date + datetime.timedelta(days=mt.values[-1])
 
-        self.time_range = pd.date_range(start_date, end_date)
+        self.Date = pd.date_range(start_date, end_date)
 
     def print_datasets(self):
         print(self.xdataset_persist)

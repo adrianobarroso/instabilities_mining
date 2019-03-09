@@ -1,9 +1,15 @@
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import yaml
 #import matplotlib.pyplot as plt
 from matplotlib import pyplot as plt
 plt.switch_backend('agg')
 import os
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 from tool_scripts import *
 
@@ -13,6 +19,8 @@ class Plot:
 
     def plot_area_buoy(self):
         from mpl_toolkits.basemap import Basemap
+        
+        fig = plt.figure(figsize=(10,6))
 
         data_stations = get_yaml('dataset/buoys_stations.yml')
         [array_lon, array_lat] = array_stations(data_stations)
@@ -30,13 +38,13 @@ class Plot:
                     resolution='l',lat_1=minlat,lat_2=maxlat,lat_0=central_lat,lon_0=central_lon)
         m.drawcoastlines()
         m.bluemarble()
-        x, y = m(array_lon, array_lat)
-        m.scatter(x, y, 30, marker='o', color='red', zorder=100)
+        # x, y = m(array_lon, array_lat)
+        # m.scatter(x, y, 30, marker='o', color='red', zorder=100)
 
         # import pdb; pdb.set_trace()
 
-        m.drawparallels(np.arange(np.round(m.llcrnrlat),np.round(m.urcrnrlat),5.), labels=[0,1,0,0], color='white', dashes=[1, 4])
-        m.drawmeridians(np.arange(np.round(m.llcrnrlon),np.round(m.urcrnrlon),10.), labels=[0,0,0,1], color='white', dashes=[1, 4])
+        m.drawparallels(np.arange(np.round(m.llcrnrlat),np.round(m.urcrnrlat),5.), labels=[1,0,0,0], color='white', dashes=[1, 4], labelstyle='+/-')
+        m.drawmeridians(np.arange(np.round(m.llcrnrlon),np.round(m.urcrnrlon),10.), labels=[0,0,0,1], color='white', dashes=[1, 4], labelstyle='+/-')
 
         # for project in data_stations:
         #     for station in data_stations[project]:
@@ -54,6 +62,8 @@ class Plot:
         # fill continents, set lake color same as ocean color.
         # m.fillcontinents(color='black',lake_color='aqua')
         m.drawmapboundary()
+        plt.xlabel(u'Longitude (º)', labelpad=20)
+        plt.ylabel(u'Latitude (º)', labelpad=30)
 
         plt.savefig('images/area_buoys.jpg')
         plt.close()
@@ -147,14 +157,20 @@ class Plot:
         x, y = m(lon, lat)
         
         vel = self.hycom_object.vel(i1, i2, j1, j2, dt)
-        fig_name = 'images/mapas/vel/mapa_ano_%s_index_%s_.jpg' % (str(vel.Date.values), str(vel.MT.values))
+        try:
+            fig_name = 'images/mapas/vel/mapa_ano_%s_index_%s_.jpg' % (str(vel.Date.values), str(vel.MT.values))
+        except:
+            fig_name = 'images/mapas/vel/mapa_index_%s_.jpg' % (str(vel.MT.values))
         
+        # import pdb; pdb.set_trace()
         [u, v] = self.hycom_object.u_v_2d(i1, i2, j1, j2, dt)
 
         # import pdb; pdb.set_trace()
 
         m.drawmapboundary()
         m.drawcoastlines()
+        m.fillcontinents(color='gray')
+        
         # m.bluemarble()
         x_stations, y_stations = m(array_lon, array_lat)
         m.scatter(x_stations, y_stations, 30, marker='o', color='black', zorder=100)
@@ -163,9 +179,12 @@ class Plot:
         m.drawmeridians(np.arange(np.round(m.llcrnrlon),np.round(m.urcrnrlon),4.), labels=[0,0,0,1], color='white', dashes=[1, 4])
 
         c = m.pcolormesh(x, y, vel.values, cmap='jet', vmin=range_vel[0], vmax=range_vel[1])
-        plt.title('Snapshot hycom current for %s \n MT = %s' % (str(vel.Date.values), str(vel.MT.values)) )
+        try: 
+            plt.title('Campo de corrente hycom para %s \n MT = %s' % (str(vel.Date.values), str(vel.MT.values)) )
+        except:
+            plt.title('Campo de corrente hycom para data %s' % (str(self.hycom_object.Date[dt])) )
 
-        plt.colorbar(ticks=np.linspace(range_vel[0], range_vel[1], 13), label='velocity (m/s)')
+        plt.colorbar(ticks=np.linspace(range_vel[0], range_vel[1], 13), label='velocidade (m/s)')
         plt.clim(range_vel[0], range_vel[1])
         
         # import pdb; pdb.set_trace()

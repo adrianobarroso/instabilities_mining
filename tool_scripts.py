@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import yaml
 
 def array_stations(data_stations):
@@ -25,6 +26,11 @@ def get_yaml(arg):
     yaml_file=arg
     file = open(yaml_file).read()
     return yaml.load(file)
+
+def start_end_time_ww3(dtime):
+    start = pd.to_datetime(str(dtime[0].values)).strftime('%Y-%m-%d')
+    end = pd.to_datetime(str(dtime[-1].values)).strftime('%Y-%m-%d')
+    return [start, end]
 
 def getuv(wdir):
     wdir_radian = _check_radians(np.radians(wdir), max_radians=4 * np.pi)

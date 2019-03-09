@@ -32,11 +32,6 @@ class PlotResults:
         year = pd.to_datetime(str(seltime)).strftime('%Y')
 
         return year
-    
-    def start_end_time_ww3(self, dtime):
-        start = pd.to_datetime(str(dtime[0].values)).strftime('%Y-%m-%d')
-        end = pd.to_datetime(str(dtime[-1].values)).strftime('%Y-%m-%d')
-        return [start, end]
         
     def plot_video_curr_no_curr(self):
         pass
