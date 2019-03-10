@@ -43,8 +43,8 @@ class Plot:
 
         # import pdb; pdb.set_trace()
 
-        m.drawparallels(np.arange(np.round(m.llcrnrlat),np.round(m.urcrnrlat),5.), labels=[1,0,0,0], color='white', dashes=[1, 4], labelstyle='+/-')
-        m.drawmeridians(np.arange(np.round(m.llcrnrlon),np.round(m.urcrnrlon),10.), labels=[0,0,0,1], color='white', dashes=[1, 4], labelstyle='+/-')
+        m.drawparallels(np.arange(np.round(m.llcrnrlat),np.round(m.urcrnrlat),5.), labels=[1,0,0,0], color='white', dashes=[1, 4], labelstyle='+/-', fontsize=18)
+        m.drawmeridians(np.arange(np.round(m.llcrnrlon),np.round(m.urcrnrlon),10.), labels=[0,0,0,1], color='white', dashes=[1, 4], labelstyle='+/-', fontsize=18)
 
         # for project in data_stations:
         #     for station in data_stations[project]:
@@ -62,8 +62,8 @@ class Plot:
         # fill continents, set lake color same as ocean color.
         # m.fillcontinents(color='black',lake_color='aqua')
         m.drawmapboundary()
-        plt.xlabel(u'Longitude (º)', labelpad=20)
-        plt.ylabel(u'Latitude (º)', labelpad=30)
+        plt.xlabel(u'Longitude (º)', labelpad=30, fontsize=18)
+        plt.ylabel(u'Latitude (º)', labelpad=50, fontsize=18)
 
         plt.savefig('images/area_buoys.jpg')
         plt.close()
