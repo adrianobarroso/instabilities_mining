@@ -19,3 +19,8 @@ PNBOIA:
   #   state: RS
   #   lat: -31.566
   #   lon: -49.966
+  # station4:
+  #   name: Vortice
+  #   state: 
+  #   lat: -27
+  #   lon: -46.3
