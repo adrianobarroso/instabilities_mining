@@ -23,8 +23,9 @@ class OutputAnalysis:
         self.ww3_url = ww3_url
         self.ww3 = xray.open_dataset(ww3_url)
         
-        self.pnboia_url = pnboia_url
-        self.pnboia = xray.open_dataset(pnboia_url)
+        if pnboia_url:
+            self.pnboia_url = pnboia_url
+            self.pnboia = xray.open_dataset(pnboia_url)
         
     def check_hs_pnboia(self):
         fig = plt.figure(figsize=(15,8))
@@ -81,7 +82,46 @@ class OutputAnalysis:
         
         plt.savefig(fig_name)
 
+
+    def check_vel_pnboia(self, lon, lat):
+        fig = plt.figure(figsize=(15,8))
+        lon = lon
+        lat = lat
         
+        fig_dir = 'results/analysis/vel_lon_lat_%s_%s' % (lon, lat)
+        os.system('mkdir -p %s' % fig_dir)
+        
+        fig_name = '%s/%s_hs_comp_lon_lat_%s_%s.png' % (fig_dir, self.year, lon, lat)
+        
+        hs_hycom = self.hycom.hs.sel(time=hs_pnboia.time, longitude=lon, latitude=lat, method='nearest')
+        
+        import pdb; pdb.set_trace()
+
+        textstr = '\n'.join((
+            r'hycom $r^{2}=%.2f$' % (cor_hycom[0,1], ),
+            # r'$mercator r^{2}=%.2f$' % (cor_mercator[0,1], ),
+            # r'$globcurtot r^{2}=%.2f$' % (cor_globcurtot[0,1], ),
+            r'sem corrente $r^{2}=%.2f$' % (cor_ww3[0,1], )
+            ))
+        props = dict(boxstyle='round', facecolor='gray', alpha=0.5)
+
+        # import pdb; pdb.set_trace()
+        dist = 40
+        
+        plt.plot(self.hycom.time[dist::], self.hycom.hs.sel(longitude=lon, latitude=lat, method='nearest')[dist::], '-k', label='Hs com corr. hycom')
+        plt.plot(self.hycom.time[dist::], self.hycom.hs.sel(longitude=lon, latitude=lat, method='nearest')[dist::], '-y', label='Hs sem corrente')
+        plt.xticks(rotation=30)
+        plt.grid()
+        plt.legend(loc='upper left')
+        
+        plt.text(self.hycom.time[-90].values, np.max(hs_pnboia)-0.2, textstr)
+        plt.title(u'Velocidade corrente')
+        plt.xlabel('tempo')
+        plt.ylabel('velocidade (m/s)')
+        
+        plt.savefig(fig_name)
+        
+                
     def pnboia_lonlat(self):
         lon = self.pnboia.longitude.values[-1]
         lat = self.pnboia.latitude.values[-1]

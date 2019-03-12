@@ -36,11 +36,12 @@ if __name__ == "__main__":
     
     # hycom_path, mercator_path, globcurtot_path = array_to_process
     
-    hycom_path = 'results/netcdf_files/ww3_hycom.2015.nc'
-    ww3_cur_path = 'results/netcdf_files/ww3_nocur.2015.nc'
+    hycom_path = 'results/netcdf_files/ww3_hycom.2016.nc'
+    ww3_cur_path = 'results/netcdf_files/ww3_nocur.2016.nc'
     
     ana = OutputAnalysis(hycom_path, ww3_cur_path, pnboia_path)
-    ana.check_hs_pnboia()
+    # import pdb; pdb.set_trace()
+    ana.check_vel_pnboia(-46.3, -27)
     
     # import pdb; pdb.set_trace()
     # for ww3_cur_path in array_to_process:
